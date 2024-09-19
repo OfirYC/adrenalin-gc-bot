@@ -1,13 +1,13 @@
 // Contains the default configuration for Bot & Plugins
 // Any attribute not given in the configuration will take its default value
 
-const botConfig = {
+export const botConfig = {
   authFolder: "auth",
   selfReply: false,
   logMessages: true,
 };
 
-const pluginsConfig = {
+export const pluginsConfig = {
   mirror: {
     prefix: "!mirror!",
   },
@@ -22,5 +22,3 @@ const pluginsConfig = {
     trigger: "all",
   },
 };
-
-module.exports = { botConfig, pluginsConfig };
