@@ -29,7 +29,7 @@ export class Malshin extends Plugin {
 
     const text = this.getText(key, message);
 
-    const terminatorID = "972532252436@s.whatsapp.net";
+    const terminatorID = "972532200486@s.whatsapp.net";
 
     if (containsTrigger(text, this.#blacklistedWords)) {
       this.sendMessage(
