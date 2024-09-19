@@ -1,7 +1,6 @@
 import { proto, AnyMessageContent } from "@whiskeysockets/baileys";
 import { GetText, Plugin, SendMessage, WAWebsocket } from "../types";
-
-const { containsTrigger } = require("../utils");
+import { containsTrigger } from "../utils";
 
 export class Malshin extends Plugin {
   #blacklistedWords = [
