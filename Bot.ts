@@ -2,10 +2,10 @@ import makeWASocket, {
   AnyMessageContent,
   DisconnectReason,
   proto,
-  useMultiFileAuthState,
 } from "@whiskeysockets/baileys";
 import P from "pino";
 import { AuthState, Plugin, WAWebsocket } from "./types";
+import { useMongoDBAuthState } from "./mongodb-auth";
 export type PluginConstructor = (
   ...params: ConstructorParameters<typeof Plugin>
 ) => Plugin;
@@ -20,7 +20,11 @@ export class Bot {
   #plugins: Plugin[];
 
   static async getAuthState() {
-    return await useMultiFileAuthState("auth");
+    return await useMongoDBAuthState({
+      mongodbUri: `mongodb+srv://heroku:${process.env.MONGODB_PASSWORD}@whatsapp-bot.xs8qv.mongodb.net/?retryWrites=true&w=majority&appName=whatsapp-bot`,
+      sessionId: "prod_session_id",
+      collectionName: "bot_collection",
+    });
   }
 
   constructor(authState: AuthState, plugins: PluginConstructor[], config = {}) {
