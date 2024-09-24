@@ -48,11 +48,26 @@ export const useMongoDBAuthState = async (
 
   async function writeData(data: any, key: any): Promise<any> {
     try {
-      return await collection.replaceOne(
-        { _id: key } as any,
-        JSON.parse(JSON.stringify(data, BufferJSON.replacer)),
-        { upsert: true }
+      console.log(
+        "Doing replace data",
+        key,
+        `IsArray: ${Array.isArray(data)}, ${Array.isArray(
+          JSON.parse(JSON.stringify(data, BufferJSON.replacer))
+        )}`,
+        JSON.parse(JSON.stringify(data, BufferJSON.replacer))
       );
+
+      let sanitizedData = JSON.parse(JSON.stringify(data, BufferJSON.replacer));
+
+      if (Array.isArray(data)) {
+        sanitizedData = JSON.parse(
+          JSON.stringify({ _id: key, content_array: data }, BufferJSON.replacer)
+        );
+      }
+
+      return await collection.replaceOne({ _id: key }, sanitizedData, {
+        upsert: true,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -61,8 +76,15 @@ export const useMongoDBAuthState = async (
   async function readData(key: any): Promise<any> {
     try {
       const data = await collection.findOne({ _id: key } as any);
-      const creds = JSON.stringify(data);
-      return JSON.parse(creds, BufferJSON.reviver);
+
+      const parsedData = JSON.parse(JSON.stringify(data, ),BufferJSON.reviver);
+
+      console.log("Returning Parsed Data", parsedData);
+      if (parsedData && parsedData.content_array) {
+        return parsedData.content_array;
+      } else {
+        return parsedData;
+      }
     } catch (error) {
       console.error("Erro ao ler dados:", error);
       throw error;
