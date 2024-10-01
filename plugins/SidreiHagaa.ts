@@ -219,13 +219,19 @@ function calculatePoints({
     const jerricanPoints = 0.5;
 
     for (const lap of laps) {
-      const [jerrican, ...stretcher] = lap;
+      const stretcher: string[] = lap.slice(0, 4);
+      let jerrican = lap.length > 4 ? lap[lap.length - 1] : null;
+
       stretcher.forEach((mechona, i) => {
         nameToPoints[mechona] ??= 0;
         nameToPoints[mechona] += stretcherPoints;
       });
-      nameToPoints[jerrican] ??= 0;
-      nameToPoints[jerrican] += jerricanPoints;
+
+      if (jerrican) {
+        jerrican = jerrican.replace(/[()]/g, "");
+        nameToPoints[jerrican] ??= 0;
+        nameToPoints[jerrican] += jerricanPoints;
+      }
     }
   }
 
