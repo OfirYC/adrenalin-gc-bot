@@ -48,14 +48,14 @@ export const useMongoDBAuthState = async (
 
   async function writeData(data: any, key: any): Promise<any> {
     try {
-      console.log(
-        "Doing replace data",
-        key,
-        `IsArray: ${Array.isArray(data)}, ${Array.isArray(
-          JSON.parse(JSON.stringify(data, BufferJSON.replacer))
-        )}`,
-        JSON.parse(JSON.stringify(data, BufferJSON.replacer))
-      );
+      // console.log(
+      //   "Doing replace data",
+      //   key,
+      //   `IsArray: ${Array.isArray(data)}, ${Array.isArray(
+      //     JSON.parse(JSON.stringify(data, BufferJSON.replacer))
+      //   )}`,
+      //   JSON.parse(JSON.stringify(data, BufferJSON.replacer))
+      // );
 
       let sanitizedData = JSON.parse(JSON.stringify(data, BufferJSON.replacer));
 
@@ -79,7 +79,7 @@ export const useMongoDBAuthState = async (
 
       const parsedData = JSON.parse(JSON.stringify(data, ),BufferJSON.reviver);
 
-      console.log("Returning Parsed Data", parsedData);
+      // console.log("Returning Parsed Data", parsedData);
       if (parsedData && parsedData.content_array) {
         return parsedData.content_array;
       } else {

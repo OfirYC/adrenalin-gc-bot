@@ -22,14 +22,14 @@ export class Bot {
   static async getAuthState() {
     return await useMongoDBAuthState({
       mongodbUri: `mongodb+srv://heroku:${process.env.MONGODB_PASSWORD}@whatsapp-bot.xs8qv.mongodb.net/?retryWrites=true&w=majority&appName=whatsapp-bot`,
-      sessionId: "prod_session_id",
+      sessionId: "new1_session_id",
       collectionName: "bot_collection",
     });
   }
 
   constructor(authState: AuthState, plugins: PluginConstructor[], config = {}) {
     this.#selfReply = false;
-    this.#logMessages = true;
+    this.#logMessages = false;
 
     const { state, saveCreds } = authState;
 
