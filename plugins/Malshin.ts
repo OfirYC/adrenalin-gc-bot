@@ -2,6 +2,8 @@ import { proto, AnyMessageContent } from "@whiskeysockets/baileys";
 import { GetText, Plugin, SendMessage, WAWebsocket } from "../types";
 import { containsTrigger } from "../utils";
 
+const ADRENALIN_GC_ID = "120363024375490421@g.us";
+
 export class Malshin extends Plugin {
   #blacklistedWords = [
     "אריה",
@@ -30,12 +32,20 @@ export class Malshin extends Plugin {
 
     const terminatorID = "972532200486@s.whatsapp.net";
 
+    if (!key.fromMe && key.remoteJid.endsWith("@g.us")) {
+      const grp = await this.socket.groupMetadata(key.remoteJid);
+      if (grp.id != ADRENALIN_GC_ID) {
+        return;
+      }
+    }
+    
     if (containsTrigger(text, this.#blacklistedWords)) {
       if (key.fromMe) {
         const censored = censorBlacklistedWords(text, this.#blacklistedWords);
         this.sendMessage(key.remoteJid, { edit: key, text: censored });
       } else {
         this.sendMessage(
+          // @ts-ignore
           key.remoteJid,
           {
             text: `@${terminatorID.slice(0, 12)} מילה אסורה ^^^`,
