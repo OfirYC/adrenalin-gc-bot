@@ -9,7 +9,7 @@ import { SidreiHagaa } from "./plugins/SidreiHagaa";
   const authState = await Bot.getAuthState();
   const plugins: PluginConstructor[] = [
     (...args) => new TagEveryone(...args),
-    (...args) => new Malshin(...args),
+    // (...args) => new Malshin(...args),
     (...args) => new SidreiHagaa(...args),
   ];
 
