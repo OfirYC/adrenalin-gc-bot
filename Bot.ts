@@ -20,6 +20,7 @@ export class Bot {
   #plugins: Plugin[];
 
   static async getAuthState() {
+    console.log("MONGO PW SER", process.env.MONGODB_PASSWORD);
     return await useMongoDBAuthState({
       mongodbUri: `mongodb+srv://heroku:${process.env.MONGODB_PASSWORD}@whatsapp-bot.xs8qv.mongodb.net/?retryWrites=true&w=majority&appName=whatsapp-bot`,
       sessionId: "new77777777_session_id",
