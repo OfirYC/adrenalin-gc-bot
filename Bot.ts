@@ -22,7 +22,7 @@ export class Bot {
   static async getAuthState() {
     return await useMongoDBAuthState({
       mongodbUri: `mongodb+srv://heroku:${process.env.MONGODB_PASSWORD}@whatsapp-bot.xs8qv.mongodb.net/?retryWrites=true&w=majority&appName=whatsapp-bot`,
-      sessionId: "new12_session_id",
+      sessionId: "new77777777_session_id",
       collectionName: "bot1_collection",
     });
   }
