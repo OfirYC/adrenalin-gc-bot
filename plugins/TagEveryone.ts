@@ -43,11 +43,15 @@ export class TagEveryone extends Plugin {
     try {
       const grp = await this.socket.groupMetadata(key.remoteJid);
 
-      if (!key.fromMe && grp.id == ADRENALIN_GC_ID && !ADRENALIN_ADMINS_IDS.has(sender)) {
+      if (
+        !key.fromMe &&
+        grp.id == ADRENALIN_GC_ID &&
+        !ADRENALIN_ADMINS_IDS.has(sender)
+      ) {
         console.error("Sender unallowed to tag everyone!");
         return;
       } else {
-        console.log("SER SER SER")
+        console.log("SER SER SER");
       }
 
       const members = grp.participants;
@@ -55,12 +59,13 @@ export class TagEveryone extends Plugin {
       const mentions: string[] = [];
       const items: string[] = [];
 
-      members.forEach(({ id, admin }) => {
+      members.forEach(member => {
+        const { id, admin } = member;
         if (admin) {
           return;
         }
         mentions.push(id);
-        items.push("@" + id.slice(0, 12));
+        items.push("@" + id.split("@")[0]);
       });
 
       if (members.length < this.#membersLimit) {

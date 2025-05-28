@@ -37,7 +37,6 @@ export class Bot {
     this.#saveCredentials = saveCreds;
 
     this.#socket = makeWASocket({
-      printQRInTerminal: true,
       auth: state,
       getMessage: this.#getMessageFromStore,
       logger: P({ level: "error" }) as any,
@@ -75,6 +74,11 @@ export class Bot {
         const update = events["connection.update"];
         const { connection, lastDisconnect } = update;
 
+        if(update.qr) {
+          console.log("QR CODE SER")
+          console.log(update.qr)
+
+        }
         if (connection === "close") {
           // reconnect if not logged out
           if (

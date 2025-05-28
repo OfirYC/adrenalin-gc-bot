@@ -18,7 +18,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.6.0",
+    "@whiskeysockets/baileys": "^6.7.17",
     "cache-manager-mongodb": "^0.3.0",
     "mongodb": "^6.9.0",
     "openai": "^4.63.0",
